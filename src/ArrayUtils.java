@@ -1,4 +1,3 @@
-
 public class ArrayUtils {
 	
 	public static double[] mult(double val, double[] array){
@@ -35,5 +34,5 @@ public class ArrayUtils {
 		
 		return result;
 	}
-
+ 
 }
