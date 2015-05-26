@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 
 public class PSO {
 	
@@ -15,6 +13,11 @@ public class PSO {
 	public static void main(String[] args) {
 		
 		Populacao a = new Populacao(NUM_DIMENSOES, TAM_POPULACAO, INTERVALO_ALEATORIO);
+		System.out.println(a.toString());
+		
+		a.atualizarVelocidades(PESO_INERCIA, PARAM_COGN, PARAM_SOCIAL);
+		a.atualizarPosicoes();
+		
 		System.out.println(a.toString());
 	}
 }

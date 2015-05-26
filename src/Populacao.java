@@ -12,7 +12,7 @@ public class Populacao {
 
 	public Populacao(int numDimensoes, int tamPopulacao, int intervalo) {
 		this.enxame = this.initPop(numDimensoes, tamPopulacao, intervalo);
-		this.atualizarMelhor();
+		this.atualizarMelhorGlobal();
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class Populacao {
 	 * com os melhores valores encontrados na população no momento que o
 	 * método é executado.
 	 */
-	void atualizarMelhor(){
+	void atualizarMelhorGlobal(){
 		ArrayList<Individuo> tempList = new ArrayList<Individuo>(this.enxame);
 		Collections.sort(tempList);
 		
@@ -69,6 +69,17 @@ public class Populacao {
 			double[] params = ArrayUtils.sum(term1, term2);
 			
 			enxame.get(i).velocidadeAtual = ArrayUtils.sum(in, params);
+		}
+	}
+	
+	void atualizarPosicoes(){
+		for (int i = 0; i < enxame.size(); i++) {
+			Individuo ind_i = enxame.get(i);
+			
+			ind_i.posicaoAtual = ArrayUtils.sum(ind_i.posicaoAtual, ind_i.velocidadeAtual);
+			ind_i.fitnessAtual = ind_i.calcularFitness();
+			
+			ind_i.atualizarMelhorLocal();
 		}
 	}
 	
