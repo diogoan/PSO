@@ -80,7 +80,6 @@ public class Populacao {
 		this.melhorFitnessGlobal = tempList.get(0).fitnessAtual;
 		this.indexMelhor = this.enxame.indexOf(tempList.get(0));
 	}
-<<<<<<< HEAD
 	
 	void atualizarVelocidades(double inercia, double paramCog, double paramSoc){
 		for (int i = 0; i < enxame.size(); i++) {
@@ -107,7 +106,7 @@ public class Populacao {
 		}
 	}
 	
-	void atualizarPosicoes(){
+	void atualizarPosicoes2(){
 		for (int i = 0; i < enxame.size(); i++) {
 			Individuo ind_i = enxame.get(i);
 			
@@ -117,10 +116,7 @@ public class Populacao {
 			ind_i.atualizarMelhorLocal();
 		}
 	}
-	
-=======
 
->>>>>>> origin/iss1
 	/**
 	 * Fornece a posição e o fitness de todos os indivíduos (mas não a velocidade)
 	 * e o informa qual o indivíduo que possui o melhor fitness.
