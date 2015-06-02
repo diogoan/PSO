@@ -6,7 +6,7 @@ public class Populacao {
 	ArrayList<Individuo> enxame;
 
 	double[] melhorPosicaoGlobal;
-	double melhorFitnessGlobal;
+	double melhorFitnessGlobal = Double.MAX_VALUE;
 
 	int indexMelhor;
 
@@ -14,33 +14,6 @@ public class Populacao {
 		this.enxame = this.initPop(numDimensoes, tamPopulacao, intervalo);
 		this.atualizarMelhorGlobal();
 	}
-	
-//	/**
-//	 * Metodo que faz mutacao em um certo numero de individuos da populacao
-//	 * quando a populacao fica presa em um mínimo local
-//	 * @param numeroDeIndividuosAMutar
-//	 */
-//	void mutacaoEnxame(int numeroDeIndividuosAMutar){
-//		Random ran = new Random(enxame.size());
-//
-//		//Atencao para o numero de individuos a mutar menor que a populacao, se nao pode
-//		//entrar em loop infinito
-//		
-//		int contador = 0;
-//		while (contador < numeroDeIndividuosAMutar) {
-//			int index = ran.nextInt();	
-//			Individuo atual = enxame.get(index);
-//			if(!atual.isMutante()){
-//				int dimensao = atual.numDimensoes;
-//				int intervalo = atual.intervalo;
-//
-//				Individuo novo = new Individuo(dimensao, intervalo);
-//				novo.mutante = true;
-//				enxame.set(index, novo);
-//				contador++;
-//			}
-//		}
-//	}
 
 	/**
 	 * Inicializa cada individuo da população com os parâmetros fornecidos.
@@ -66,43 +39,49 @@ public class Populacao {
 	void atualizarMelhorGlobal(){
 		ArrayList<Individuo> tempList = new ArrayList<Individuo>(this.enxame);
 		Collections.sort(tempList);
-		this.melhorPosicaoGlobal = tempList.get(0).posicaoAtual;
-		this.melhorFitnessGlobal = tempList.get(0).fitnessAtual;
-		this.indexMelhor = this.enxame.indexOf(tempList.get(0));
+
+		Individuo melhorDessaGen = tempList.get(0);
+
+		if(melhorDessaGen.fitnessAtual < this.melhorFitnessGlobal)
+		{
+			this.melhorPosicaoGlobal = melhorDessaGen.posicaoAtual;
+			this.melhorFitnessGlobal = melhorDessaGen.fitnessAtual;
+			this.indexMelhor = this.enxame.indexOf(melhorDessaGen);
+		}
 	}
-	
+
 	void atualizarVelocidades(double inercia, double paramCog, double paramSoc){
 		for (int i = 0; i < enxame.size(); i++) {
-			
+
 			double[] xi = enxame.get(i).posicaoAtual;
 			double[] vi = enxame.get(i).velocidadeAtual;
-			
+
 			double[] melhorPosicaoParcial = enxame.get(i).melhorPosicao;
-			
+
 			double r1 = Math.random();
 			double r2 = Math.random();
-			
+
 			double[] in = ArrayUtils.mult(inercia, vi);
-			
+
 			double[] pbest = ArrayUtils.dif(melhorPosicaoParcial, xi);
 			double[] gbest = ArrayUtils.dif(melhorPosicaoGlobal, xi);
-			
+
 			double[] term1 = ArrayUtils.mult(paramCog * r1, pbest);
 			double[] term2 = ArrayUtils.mult(paramSoc * r2, gbest);
-			
+
 			double[] params = ArrayUtils.sum(term1, term2);
-			
+
 			enxame.get(i).velocidadeAtual = ArrayUtils.sum(in, params);
 		}
 	}
-	
+
 	void atualizarPosicoes(){
 		for (int i = 0; i < enxame.size(); i++) {
 			Individuo ind_i = enxame.get(i);
-			
+
 			ind_i.posicaoAtual = ArrayUtils.sum(ind_i.posicaoAtual, ind_i.velocidadeAtual);
 			ind_i.fitnessAtual = Ackley.fitness(ind_i.posicaoAtual);
-			
+
 			ind_i.atualizarMelhorLocal();
 		}
 	}
@@ -114,10 +93,11 @@ public class Populacao {
 	public String toString(){
 		StringBuilder descPop = new StringBuilder();
 		for(int i = 0; i < enxame.size(); i++){
-			descPop.append("Individuo " + i + " - ");
-			descPop.append(enxame.get(i) + "\n");
+			/*descPop.append("Individuo " + i + " - ");
+			descPop.append(enxame.get(i) + "\n");*/
+			descPop.append(enxame.get(i) + "; ");
 		}
-		descPop.append("Melhor: " + indexMelhor + " | Fitness: " + melhorFitnessGlobal);
+		/*descPop.append("Melhor: " + indexMelhor + " | Fitness: " + melhorFitnessGlobal);*/
 		return descPop.toString();
 	}
 

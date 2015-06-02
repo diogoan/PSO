@@ -9,23 +9,14 @@ public class Individuo implements Comparable<Individuo>{
      
 	double[] melhorPosicao;
 	double melhorFitness = Double.MAX_VALUE;
-     
-//	int numDimensoes;
-//	int intervalo;
-//	boolean mutante = false;
 	
 	public Individuo(int numDimensoes, int intervalo){
-		super();
-//		this.numDimensoes = numDimensoes;
-//		this.intervalo = intervalo;
-		
+		super();		
 		this.posicaoAtual = this.initPos(numDimensoes, intervalo);
 		this.fitnessAtual = Ackley.fitness(this.posicaoAtual);
 		
 		this.velocidadeAtual = this.initVel(numDimensoes);
 		this.atualizarMelhorLocal();
-		
-//		this.mutante = false;
 	}
 
 	/**
@@ -65,12 +56,8 @@ public class Individuo implements Comparable<Individuo>{
 		this.atualizarMelhorLocal();
 	}
 	
-//	boolean isMutante(){
-//		return this.mutante;
-//	}
-	
 	public String toString(){
-		return ("Posição: " + Arrays.toString(posicaoAtual) + " | Fitness: " + Double.toString(fitnessAtual));
+		return (/*"Posição: " + Arrays.toString(posicaoAtual) + " | Fitness: " + */Double.toString(fitnessAtual));
 	}
 
 	@Override
