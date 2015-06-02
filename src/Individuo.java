@@ -1,28 +1,31 @@
 import java.util.Arrays;
 
 public class Individuo implements Comparable<Individuo>{
-
+     
 	double[] posicaoAtual;
 	double fitnessAtual;
-
+     
 	double[] velocidadeAtual;
-
+     
 	double[] melhorPosicao;
 	double melhorFitness = Double.MAX_VALUE;
-
-	int numDimensoes;
-	int intervalo;
-	boolean mutante = false;
+     
+//	int numDimensoes;
+//	int intervalo;
+//	boolean mutante = false;
 	
 	public Individuo(int numDimensoes, int intervalo){
 		super();
-		this.numDimensoes = numDimensoes;
-		this.intervalo = intervalo;
+//		this.numDimensoes = numDimensoes;
+//		this.intervalo = intervalo;
+		
 		this.posicaoAtual = this.initPos(numDimensoes, intervalo);
-		this.fitnessAtual = this.calcularFitness();
+		this.fitnessAtual = Ackley.fitness(this.posicaoAtual);
+		
 		this.velocidadeAtual = this.initVel(numDimensoes);
 		this.atualizarMelhorLocal();
-		this.mutante = false;
+		
+//		this.mutante = false;
 	}
 
 	/**
@@ -49,24 +52,22 @@ public class Individuo implements Comparable<Individuo>{
 		return velArray;
 	}
 
-	double calcularFitness(){
-		return Ackley.calculate(this.posicaoAtual);
-	}
-
 	void atualizarMelhorLocal(){
 		if(this.fitnessAtual < this.melhorFitness){
 			this.melhorPosicao = this.posicaoAtual;
 			this.melhorFitness = this.fitnessAtual;
 		}
 	}
-
-	void atualizarVelocidade(double[] posicao){
-		
+	
+	void atualizarPosicao(){
+		this.posicaoAtual = ArrayUtils.sum(this.posicaoAtual, this.velocidadeAtual);
+		this.fitnessAtual = Ackley.fitness(this.posicaoAtual);
+		this.atualizarMelhorLocal();
 	}
 	
-	double[] atualizarPosicao(){
-		return ArrayUtils.sum(posicaoAtual, velocidadeAtual);
-	}
+//	boolean isMutante(){
+//		return this.mutante;
+//	}
 	
 	public String toString(){
 		return ("Posição: " + Arrays.toString(posicaoAtual) + " | Fitness: " + Double.toString(fitnessAtual));

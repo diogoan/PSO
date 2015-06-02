@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class Populacao {
 
@@ -16,41 +15,32 @@ public class Populacao {
 		this.atualizarMelhorGlobal();
 	}
 	
-	/**
-	 * Atualiza as posicoes de todo o enxame
-	 */
-	void atualizarPosicoes(){
-		for (int i = 0; i < enxame.size(); i++) {
-			enxame.get(i).atualizarPosicao();
-		}
-	}
-
-	/**
-	 * Metodo que faz mutacao em um certo numero de individuos da populacao
-	 * quando a populacao fica presa em um mínimo local
-	 * @param numeroDeIndividuosAMutar
-	 */
-	void mutacaoEnxame(int numeroDeIndividuosAMutar){
-		Random ran = new Random(enxame.size());
-
-		//Atencao para o numero de individuos a mutar menor que a populacao, se nao pode
-		//entrar em loop infinito
-		
-		int contador = 0;
-		while (contador < numeroDeIndividuosAMutar) {
-			int index = ran.nextInt();	
-			Individuo atual = enxame.get(index);
-			if(atual.mutante == false){
-				int dimensao = atual.numDimensoes;
-				int intervalo = atual.intervalo;
-
-				Individuo novo = new Individuo(dimensao, intervalo);
-				novo.mutante = true;
-				enxame.set(index, novo);
-				contador++;
-			}
-		}
-	}
+//	/**
+//	 * Metodo que faz mutacao em um certo numero de individuos da populacao
+//	 * quando a populacao fica presa em um mínimo local
+//	 * @param numeroDeIndividuosAMutar
+//	 */
+//	void mutacaoEnxame(int numeroDeIndividuosAMutar){
+//		Random ran = new Random(enxame.size());
+//
+//		//Atencao para o numero de individuos a mutar menor que a populacao, se nao pode
+//		//entrar em loop infinito
+//		
+//		int contador = 0;
+//		while (contador < numeroDeIndividuosAMutar) {
+//			int index = ran.nextInt();	
+//			Individuo atual = enxame.get(index);
+//			if(!atual.isMutante()){
+//				int dimensao = atual.numDimensoes;
+//				int intervalo = atual.intervalo;
+//
+//				Individuo novo = new Individuo(dimensao, intervalo);
+//				novo.mutante = true;
+//				enxame.set(index, novo);
+//				contador++;
+//			}
+//		}
+//	}
 
 	/**
 	 * Inicializa cada individuo da população com os parâmetros fornecidos.
@@ -106,12 +96,12 @@ public class Populacao {
 		}
 	}
 	
-	void atualizarPosicoes2(){
+	void atualizarPosicoes(){
 		for (int i = 0; i < enxame.size(); i++) {
 			Individuo ind_i = enxame.get(i);
 			
 			ind_i.posicaoAtual = ArrayUtils.sum(ind_i.posicaoAtual, ind_i.velocidadeAtual);
-			ind_i.fitnessAtual = ind_i.calcularFitness();
+			ind_i.fitnessAtual = Ackley.fitness(ind_i.posicaoAtual);
 			
 			ind_i.atualizarMelhorLocal();
 		}

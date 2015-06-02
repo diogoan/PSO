@@ -1,7 +1,7 @@
 
 public final class Ackley {
 
-	public static double calculate(double[] xx){
+	private static double calculate(double[] xx){
 
 		double n = xx.length;
 
@@ -25,6 +25,10 @@ public final class Ackley {
 		double t2 = -Math.exp(som2/n);
 
 		return t1 + t2 + c1 + Math.exp(1);
+	}
+	
+	public static double fitness(double[] xx){
+		return Ackley.calculate(xx);
 	}
 
 }
