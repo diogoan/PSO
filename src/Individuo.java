@@ -57,7 +57,7 @@ public class Individuo implements Comparable<Individuo>{
 	}
 	
 	public String toString(){
-		return (/*"Posição: " + Arrays.toString(posicaoAtual) + " | Fitness: " + */Double.toString(fitnessAtual));
+		return (Double.toString(this.fitnessAtual) + " " + Arrays.toString(this.posicaoAtual) + " " + Arrays.toString(this.velocidadeAtual));
 	}
 
 	@Override

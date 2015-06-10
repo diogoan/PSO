@@ -1,14 +1,14 @@
 
 public class PSO {
 	
-	final static int NUM_DIMENSOES = 30;
-	final static int TAM_POPULACAO = 100;
-	final static int LIM_ITERACOES = 1000;
-	final static int INTERVALO_ALEATORIO = 50;
+	final static int NUM_DIMENSOES = 2;
+	final static int TAM_POPULACAO = 10;
+	final static int LIM_ITERACOES = 10000;
+	final static int INTERVALO_ALEATORIO = 30;
 	
-	final static double PESO_INERCIA = 5;
-	final static double PARAM_COGN = 1.5;
-	final static double PARAM_SOCIAL = 1.5;
+	final static double PESO_INERCIA = 1;
+	final static double PARAM_COGN = 2;
+	final static double PARAM_SOCIAL = 2;
 		
 	public static void main(String[] args) {
 		

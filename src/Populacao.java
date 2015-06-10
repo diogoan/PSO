@@ -93,11 +93,8 @@ public class Populacao {
 	public String toString(){
 		StringBuilder descPop = new StringBuilder();
 		for(int i = 0; i < enxame.size(); i++){
-			/*descPop.append("Individuo " + i + " - ");
-			descPop.append(enxame.get(i) + "\n");*/
 			descPop.append(enxame.get(i) + "; ");
 		}
-		/*descPop.append("Melhor: " + indexMelhor + " | Fitness: " + melhorFitnessGlobal);*/
 		return descPop.toString();
 	}
 
