@@ -51,8 +51,15 @@ public class Individuo implements Comparable<Individuo>{
 	}
 	
 	void atualizarPosicao(){
-		this.posicaoAtual = ArrayUtils.sum(this.posicaoAtual, this.velocidadeAtual);
-		this.fitnessAtual = Ackley.fitness(this.posicaoAtual);
+		
+		double[] novaPos = ArrayUtils.sum(this.posicaoAtual, this.velocidadeAtual);
+		double novoFit = Ackley.fitness(this.posicaoAtual);
+		
+		if(!Double.isNaN(novoFit)){
+			this.posicaoAtual = novaPos;
+			this.fitnessAtual = novoFit;
+		}
+		
 		this.atualizarMelhorLocal();
 	}
 	

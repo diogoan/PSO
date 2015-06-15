@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Populacao {
@@ -94,6 +95,30 @@ public class Populacao {
 		StringBuilder descPop = new StringBuilder();
 		for(int i = 0; i < enxame.size(); i++){
 			descPop.append(enxame.get(i) + "; ");
+		}
+		return descPop.toString();
+	}
+	
+	public String posicoesString(){
+		StringBuilder descPop = new StringBuilder();
+		for(int i = 0; i < enxame.size(); i++){
+			descPop.append(Arrays.toString(enxame.get(i).posicaoAtual) + "\n");
+		}
+		return descPop.toString();
+	}
+	
+	public String velocidadesString(){
+		StringBuilder descPop = new StringBuilder();
+		for(int i = 0; i < enxame.size(); i++){
+			descPop.append(Arrays.toString(enxame.get(i).velocidadeAtual) + "\n");
+		}
+		return descPop.toString();
+	}
+	
+	public String fitnessString(){
+		StringBuilder descPop = new StringBuilder();
+		for(int i = 0; i < enxame.size(); i++){
+			descPop.append(enxame.get(i).fitnessAtual + "\n");
 		}
 		return descPop.toString();
 	}
