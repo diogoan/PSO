@@ -14,9 +14,9 @@ public class PSO {
 		
 		Populacao a = new Populacao(NUM_DIMENSOES, TAM_POPULACAO, INTERVALO_ALEATORIO);
 		System.out.println(a.toString());
-
-		a.atualizarVelocidades(PESO_INERCIA, PARAM_COGN, PARAM_SOCIAL);
+		
 		a.atualizarPosicoes();
+		a.atualizarVelocidades(PESO_INERCIA, PARAM_COGN, PARAM_SOCIAL);
 		
 		System.out.println(a.toString());
 		

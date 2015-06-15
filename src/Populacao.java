@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class Populacao {
 
@@ -15,7 +14,7 @@ public class Populacao {
 		this.enxame = this.initPop(numDimensoes, tamPopulacao, intervalo);
 		this.atualizarMelhorGlobal();
 	}
-	
+
 	/**
 	 * Atualiza as posicoes de todo o enxame
 	 */
@@ -31,16 +30,15 @@ public class Populacao {
 	 * @param numeroDeIndividuosAMutar
 	 */
 	void mutacaoEnxame(int numeroDeIndividuosAMutar){
-		Random ran = new Random(enxame.size());
 
 		//Atencao para o numero de individuos a mutar menor que a populacao, se nao pode
 		//entrar em loop infinito
-		
+
 		int contador = 0;
 		while (contador < numeroDeIndividuosAMutar) {
-			int index = ran.nextInt();	
+			int index = (int) (Math.random()*(enxame.size()));	
 			Individuo atual = enxame.get(index);
-			if(atual.mutante == false){
+			//if(atual.mutante == false){
 				int dimensao = atual.numDimensoes;
 				int intervalo = atual.intervalo;
 
@@ -48,7 +46,7 @@ public class Populacao {
 				novo.mutante = true;
 				enxame.set(index, novo);
 				contador++;
-			}
+			//}
 		}
 	}
 
@@ -80,39 +78,20 @@ public class Populacao {
 		this.melhorFitnessGlobal = tempList.get(0).fitnessAtual;
 		this.indexMelhor = this.enxame.indexOf(tempList.get(0));
 	}
-	
+
 	void atualizarVelocidades(double inercia, double paramCog, double paramSoc){
 		for (int i = 0; i < enxame.size(); i++) {
-			
-			double[] xi = enxame.get(i).posicaoAtual;
-			double[] vi = enxame.get(i).velocidadeAtual;
-			
-			double[] melhorPosicaoParcial = enxame.get(i).melhorPosicao;
-			
-			double r1 = Math.random();
-			double r2 = Math.random();
-			
-			double[] in = ArrayUtils.mult(inercia, vi);
-			
-			double[] pbest = ArrayUtils.dif(melhorPosicaoParcial, xi);
-			double[] gbest = ArrayUtils.dif(melhorPosicaoGlobal, xi);
-			
-			double[] term1 = ArrayUtils.mult(paramCog * r1, pbest);
-			double[] term2 = ArrayUtils.mult(paramSoc * r2, gbest);
-			
-			double[] params = ArrayUtils.sum(term1, term2);
-			
-			enxame.get(i).velocidadeAtual = ArrayUtils.sum(in, params);
+			enxame.get(i).atualizarVelocidade(melhorPosicaoGlobal, inercia, paramCog, paramSoc);
 		}
 	}
-	
+
 	void atualizarPosicoes2(){
 		for (int i = 0; i < enxame.size(); i++) {
 			Individuo ind_i = enxame.get(i);
-			
+
 			ind_i.posicaoAtual = ArrayUtils.sum(ind_i.posicaoAtual, ind_i.velocidadeAtual);
 			ind_i.fitnessAtual = ind_i.calcularFitness();
-			
+
 			ind_i.atualizarMelhorLocal();
 		}
 	}
@@ -131,4 +110,16 @@ public class Populacao {
 		return descPop.toString();
 	}
 
+	public static void main(String[] args) {
+		Populacao pop = new Populacao(30, 30, 30);
+		for (int i = 0; i < 5000; i++) {
+			pop.atualizarPosicoes2();
+			pop.atualizarVelocidades(0.9, 0.5, 0.5);
+			pop.atualizarMelhorGlobal();
+			pop.mutacaoEnxame(1);
+			System.out.println(pop.melhorFitnessGlobal);
+			
+		}
+
+	}
 }
